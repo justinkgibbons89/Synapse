@@ -6,15 +6,17 @@
         <attribute name="link" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="url" attributeType="String"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="channel" inverseEntity="Item"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="content" attributeType="String"/>
         <attribute name="desc" attributeType="String"/>
         <attribute name="link" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Channel" inverseName="items" inverseEntity="Channel"/>
     </entity>
     <elements>
-        <element name="Channel" positionX="-63" positionY="-18" width="128" height="28"/>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="28"/>
+        <element name="Channel" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="118"/>
     </elements>
 </model>

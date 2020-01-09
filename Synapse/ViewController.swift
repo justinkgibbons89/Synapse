@@ -13,12 +13,14 @@ class FeedVC: UITableViewController {
 		super.viewDidLoad()
 		Networking().download("https://slatestarcodex.com/feed/") { data in
 			let feedReader = FeedReader(data: data)
-			let channel = feedReader.channel(from: data)
+			feedReader.save()
+			/*
+			let channel = feedReader.channel()
 			print("Channel: \(channel)")
-			let items = feedReader.items(from: data)
+			let items = feedReader.items()
 			for item in items {
 				print(item.title!)
-			}
+			}*/
 		}
 	}
 	

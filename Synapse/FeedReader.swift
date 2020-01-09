@@ -5,20 +5,23 @@ import CoreData
 class FeedReader {
 	
 	//MARK: Initializer
-	internal init(data: Data) {
+	internal init(data: Data, context: NSManagedObjectContext = CoreData.shared.mainContext) {
+		self.context = context
 		self.xml = SWXMLHash.parse(data)
 	}
 	
 	//MARK: Properties
-	let xml: XMLIndexer
+	private let xml: XMLIndexer
+	private let context: NSManagedObjectContext
 	
 	//MARK: Element shorcuts
-	var channelElement: XMLIndexer { xml["rss"]["channel"] }
-	var itemElements: [XMLIndexer] { channelElement["item"].all }
+	private var channelElement: XMLIndexer { xml["rss"]["channel"] }
+	private var itemElements: [XMLIndexer] { channelElement["item"].all }
 	
 	//MARK: Methods
-	func channel(from data: Data) -> Channel {
-		let channel = Channel(context: CoreData.shared.mainContext)
+	@discardableResult
+	public func channel() -> Channel {
+		let channel = Channel(context: context)
 		channel.title = channelElement["title"].element?.text
 		channel.link = channelElement["link"].element?.text
 		channel.desc = channelElement["description"].element?.text
@@ -27,7 +30,8 @@ class FeedReader {
 		return channel
 	}
 	
-	func items(from data: Data) -> [Item] {
+	@discardableResult
+	public func items() -> [Item] {
 		var results: [Item] = []
 		for itemElement in itemElements {
 			let item = self.item(from: itemElement)
@@ -36,12 +40,19 @@ class FeedReader {
 		return results
 	}
 	
-	func item(from xml: XMLIndexer) -> Item {
-		let item = Item(context: CoreData.shared.mainContext)
+	public func item(from xml: XMLIndexer) -> Item {
+		let item = Item(context: context)
 		item.title = xml["title"].element?.text
 		item.desc = xml["description"].element?.text
 		item.link = xml["link"].element?.text
 		item.content = xml["content:encoded"].element?.text
+		item.channel = channel()
 		return item
+	}
+	
+	public func save() {
+		channel()
+		items()
+		try! context.save()
 	}
 }

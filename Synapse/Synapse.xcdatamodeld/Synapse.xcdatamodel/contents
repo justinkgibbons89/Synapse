@@ -7,7 +7,14 @@
         <attribute name="title" attributeType="String"/>
         <attribute name="url" attributeType="String"/>
     </entity>
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="content" attributeType="String"/>
+        <attribute name="desc" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
     <elements>
         <element name="Channel" positionX="-63" positionY="-18" width="128" height="28"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="28"/>
     </elements>
 </model>

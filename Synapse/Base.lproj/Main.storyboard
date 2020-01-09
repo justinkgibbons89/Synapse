@@ -36,11 +36,39 @@
                             <outlet property="delegate" destination="Rbb-Qb-62Z" id="rHG-zH-0rX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Feed" id="exk-Tv-JLE"/>
+                    <navigationItem key="navigationItem" title="Feed" id="exk-Tv-JLE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ccL-qm-zJ5">
+                            <connections>
+                                <action selector="addButtonTapped:" destination="Rbb-Qb-62Z" id="jZZ-Ia-xht"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="5V9-T1-T65" kind="show" id="VSC-X6-oYW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YtO-R7-5hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="607" y="-638"/>
+            <point key="canvasLocation" x="606" y="-638"/>
+        </scene>
+        <!--Add Feed-->
+        <scene sceneID="TgM-uo-EkC">
+            <objects>
+                <tableViewController storyboardIdentifier="AddFeedVC" id="5V9-T1-T65" customClass="AddFeedVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="I3S-al-87E">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="5V9-T1-T65" id="NOF-ZO-MzT"/>
+                            <outlet property="delegate" destination="5V9-T1-T65" id="SKJ-1k-gkK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Feed" id="bdN-hC-m3g"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ogf-Pd-xdm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1504" y="-638"/>
         </scene>
         <!--Feed-->
         <scene sceneID="7FC-6M-q8U">

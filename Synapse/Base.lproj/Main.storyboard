@@ -44,7 +44,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="5V9-T1-T65" kind="show" id="VSC-X6-oYW"/>
+                        <segue destination="5V9-T1-T65" kind="show" identifier="ManualSegue" id="VSC-X6-oYW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YtO-R7-5hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

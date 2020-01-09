@@ -14,9 +14,10 @@ class FeedVC: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		Networking().download("https://slatestarcodex.com/feed/") { data in
-			let channel = FeedReader().channel(from: data)
+			let feedReader = FeedReader(data: data)
+			let channel = feedReader.channel(from: data)
 			print("Channel: \(channel)")
-			let items = FeedReader().items(from: data)
+			let items = feedReader.items(from: data)
 			for item in items {
 				print(item.title!)
 			}
@@ -44,27 +45,33 @@ class Networking {
 
 class FeedReader {
 	
+	//MARK: Initializer
+	internal init(data: Data) {
+		self.xml = SWXMLHash.parse(data)
+	}
+	
+	//MARK: Properties
+	let xml: XMLIndexer
+	
+	//MARK: Element shorcuts
+	var channelElement: XMLIndexer { xml["rss"]["channel"] }
+	var itemElements: [XMLIndexer] { channelElement["item"].all }
+	
+	//MARK: Methods
 	func channel(from data: Data) -> Channel {
-		let xml = SWXMLHash.parse(data)
-		let channelElement = xml["rss"]["channel"]
-
 		let channel = Channel(context: CoreData.shared.mainContext)
 		channel.title = channelElement["title"].element?.text
 		channel.link = channelElement["link"].element?.text
 		channel.desc = channelElement["description"].element?.text
 		channel.url = channelElement["atom:link"].element?.attribute(by: "href")?.text
 		channel.language = channelElement["language"].element?.text
-		
 		return channel
 	}
 	
 	func items(from data: Data) -> [Item] {
 		var results: [Item] = []
-		let xml = SWXMLHash.parse(data)
-		let channelElement = xml["rss"]["channel"]
-		let items = channelElement["item"].all
-		for xmlItem in items {
-			let item = self.item(from: xmlItem)
+		for itemElement in itemElements {
+			let item = self.item(from: itemElement)
 			results.append(item)
 		}
 		return results

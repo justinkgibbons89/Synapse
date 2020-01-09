@@ -18,9 +18,7 @@ class FeedReader {
 	private var channelElement: XMLIndexer { xml["rss"]["channel"] }
 	private var itemElements: [XMLIndexer] { channelElement["item"].all }
 	
-	//MARK: Methods
-	@discardableResult
-	public func channel() -> Channel {
+	private lazy var cachedChannel: Channel = {
 		let channel = Channel(context: context)
 		channel.title = channelElement["title"].element?.text
 		channel.link = channelElement["link"].element?.text
@@ -28,6 +26,12 @@ class FeedReader {
 		channel.url = channelElement["atom:link"].element?.attribute(by: "href")?.text
 		channel.language = channelElement["language"].element?.text
 		return channel
+	}()
+
+	//MARK: Methods
+	@discardableResult
+	public func channel() -> Channel {
+		cachedChannel
 	}
 	
 	@discardableResult
@@ -40,7 +44,7 @@ class FeedReader {
 		return results
 	}
 	
-	public func item(from xml: XMLIndexer) -> Item {
+	private func item(from xml: XMLIndexer) -> Item {
 		let item = Item(context: context)
 		item.title = xml["title"].element?.text
 		item.desc = xml["description"].element?.text

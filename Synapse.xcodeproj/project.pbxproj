@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		D001678223C6B08B003AD833 /* Synapse.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D001678023C6B08B003AD833 /* Synapse.xcdatamodeld */; };
 		D001678423C6B08D003AD833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D001678323C6B08D003AD833 /* Assets.xcassets */; };
 		D001678723C6B08D003AD833 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D001678523C6B08D003AD833 /* LaunchScreen.storyboard */; };
+		D001679323C6EEA5003AD833 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = D001679223C6EEA5003AD833 /* SWXMLHash */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D001679323C6EEA5003AD833 /* SWXMLHash in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,16 +60,40 @@
 		D001677623C6B08B003AD833 /* Synapse */ = {
 			isa = PBXGroup;
 			children = (
-				D001677723C6B08B003AD833 /* AppDelegate.swift */,
-				D001677923C6B08B003AD833 /* SceneDelegate.swift */,
+				D001679023C6B224003AD833 /* Delegates */,
 				D001677B23C6B08B003AD833 /* ViewController.swift */,
-				D001677D23C6B08B003AD833 /* Main.storyboard */,
+				D001678F23C6B217003AD833 /* Storyboards */,
+				D001678E23C6B208003AD833 /* Resources */,
+			);
+			path = Synapse;
+			sourceTree = "<group>";
+		};
+		D001678E23C6B208003AD833 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				D001678323C6B08D003AD833 /* Assets.xcassets */,
-				D001678523C6B08D003AD833 /* LaunchScreen.storyboard */,
 				D001678823C6B08D003AD833 /* Info.plist */,
 				D001678023C6B08B003AD833 /* Synapse.xcdatamodeld */,
 			);
-			path = Synapse;
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D001678F23C6B217003AD833 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				D001677D23C6B08B003AD833 /* Main.storyboard */,
+				D001678523C6B08D003AD833 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		D001679023C6B224003AD833 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				D001677723C6B08B003AD833 /* AppDelegate.swift */,
+				D001677923C6B08B003AD833 /* SceneDelegate.swift */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +112,9 @@
 			dependencies = (
 			);
 			name = Synapse;
+			packageProductDependencies = (
+				D001679223C6EEA5003AD833 /* SWXMLHash */,
+			);
 			productName = Synapse;
 			productReference = D001677423C6B08B003AD833 /* Synapse.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +143,9 @@
 				Base,
 			);
 			mainGroup = D001676B23C6B08B003AD833;
+			packageReferences = (
+				D001679123C6EEA5003AD833 /* XCRemoteSwiftPackageReference "SWXMLHash" */,
+			);
 			productRefGroup = D001677523C6B08B003AD833 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -342,6 +374,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D001679123C6EEA5003AD833 /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/drmohundro/SWXMLHash.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D001679223C6EEA5003AD833 /* SWXMLHash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D001679123C6EEA5003AD833 /* XCRemoteSwiftPackageReference "SWXMLHash" */;
+			productName = SWXMLHash;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D001678023C6B08B003AD833 /* Synapse.xcdatamodeld */ = {

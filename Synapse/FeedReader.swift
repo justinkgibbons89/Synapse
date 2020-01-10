@@ -12,7 +12,7 @@ class FeedReader {
 	
 	//MARK: Properties
 	private let xml: XMLIndexer
-	private let context: NSManagedObjectContext
+	public let context: NSManagedObjectContext
 	
 	//MARK: Element shorcuts
 	private var channelElement: XMLIndexer { xml["rss"]["channel"] }
@@ -44,13 +44,14 @@ class FeedReader {
 		return results
 	}
 	
-	private func item(from xml: XMLIndexer) -> Item {
+	private func item(from indexer: XMLIndexer) -> Item {
 		let item = Item(context: context)
-		item.title = xml["title"].element?.text
-		item.desc = xml["description"].element?.text
-		item.link = xml["link"].element?.text
-		item.content = xml["content:encoded"].element?.text
+		item.title = indexer["title"].element?.text
+		item.desc = indexer["description"].element?.text
+		item.link = indexer["link"].element?.text
+		item.content = indexer["content:encoded"].element?.text
 		item.channel = channel()
+		print("built item: \(item)")
 		return item
 	}
 	
@@ -58,5 +59,21 @@ class FeedReader {
 		channel()
 		items()
 		try! context.save()
+	}
+	
+	//MARK: Subscribing
+	public static func subscribe(to channelPath: String) {
+		Networking().download(channelPath) { data in
+			let feedReader = FeedReader(data: data)
+			feedReader.save()
+		}
+	}
+	
+	public static func analyze(_ channelPath: String) {
+		print("Analyzing...")
+		Networking().download(channelPath) { (data) in
+			let feedReader = FeedReader(data: data)
+			let items = feedReader.items()
+		}
 	}
 }

@@ -23,10 +23,10 @@
             </objects>
             <point key="canvasLocation" x="-326" y="63"/>
         </scene>
-        <!--Feed-->
+        <!--Channels-->
         <scene sceneID="iMh-jJ-wUw">
             <objects>
-                <tableViewController id="Rbb-Qb-62Z" customClass="FeedVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Rbb-Qb-62Z" customClass="ChannelsVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7kV-9B-fML">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,7 +36,7 @@
                             <outlet property="delegate" destination="Rbb-Qb-62Z" id="rHG-zH-0rX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Feed" id="exk-Tv-JLE">
+                    <navigationItem key="navigationItem" title="Channels" id="exk-Tv-JLE">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ccL-qm-zJ5">
                             <connections>
                                 <action selector="addButtonTapped:" destination="Rbb-Qb-62Z" id="jZZ-Ia-xht"/>
@@ -45,11 +45,31 @@
                     </navigationItem>
                     <connections>
                         <segue destination="5V9-T1-T65" kind="show" identifier="ManualSegue" id="VSC-X6-oYW"/>
+                        <segue destination="lAq-VQ-hUu" kind="show" id="vyi-BO-qOU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YtO-R7-5hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="606" y="-638"/>
+        </scene>
+        <!--Item ListVC-->
+        <scene sceneID="J87-L4-TaQ">
+            <objects>
+                <tableViewController storyboardIdentifier="ItemListVC" id="lAq-VQ-hUu" customClass="ItemListVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lRq-Qt-sLe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="lAq-VQ-hUu" id="4ef-ME-z3o"/>
+                            <outlet property="delegate" destination="lAq-VQ-hUu" id="pwx-YK-ceA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="63u-Zy-GA9"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sn6-RT-ra9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1514" y="-290"/>
         </scene>
         <!--Add Feed-->
         <scene sceneID="TgM-uo-EkC">
@@ -68,7 +88,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogf-Pd-xdm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1504" y="-638"/>
+            <point key="canvasLocation" x="1506" y="-972"/>
         </scene>
         <!--Feed-->
         <scene sceneID="7FC-6M-q8U">

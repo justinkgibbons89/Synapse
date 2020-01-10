@@ -9,6 +9,15 @@ class CoreData {
 	var mainContext: NSManagedObjectContext {
 		persistentContainer.viewContext
 	}
+	
+	func delete<T: NSManagedObject>(type: T.Type) {
+		let fetch = T.fetchRequest() as! NSFetchRequest<T>
+		fetch.predicate = nil
+		fetch.sortDescriptors = []
+		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetch as! NSFetchRequest<NSFetchRequestResult>)
+		try! Self.shared.mainContext.execute(deleteRequest)
+	}
+	
 
 	lazy var persistentContainer: NSPersistentContainer = {
 	    /*

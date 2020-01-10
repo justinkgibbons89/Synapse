@@ -58,16 +58,20 @@ class FeedReader {
 	public func save() {
 		channel()
 		items()
-		try! context.save()
+		do {
+			try context.save()
+		} catch {
+			print("Error saving context w/channel and items: \(error)")
+		}
 	}
 	
 	//MARK: Subscribing
-	public static func subscribe(to channelPath: String, completion: @escaping (Channel) -> Void) {
+	public static func subscribe(to channelPath: String, completion: ((Channel) -> Void)? = nil) {
 		Networking().download(channelPath) { data in
 			let feedReader = FeedReader(data: data)
 			feedReader.save()
 			DispatchQueue.main.async {
-				completion(feedReader.channel())
+				completion?(feedReader.channel())
 			}
 		}
 	}

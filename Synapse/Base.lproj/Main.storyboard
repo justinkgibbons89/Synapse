@@ -45,7 +45,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="5V9-T1-T65" kind="show" identifier="ManualSegue" id="VSC-X6-oYW"/>
-                        <segue destination="lAq-VQ-hUu" kind="show" id="vyi-BO-qOU"/>
+                        <segue destination="lAq-VQ-hUu" kind="show" identifier="Channel segue" id="vyi-BO-qOU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YtO-R7-5hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -17,6 +17,18 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		setupFRC()
 	}
 	
+	//MARK: UITableView Diffable Data Source
+	private lazy var diffableDataSource: UITableViewDiffableDataSource<Int, Channel> = {
+		UITableViewDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
+			let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+			cell.textLabel?.text = channel.title
+			return cell
+		}
+	}()
+	
+	//MARK: Fetched Results Controller
+	private var frc: NSFetchedResultsController<Channel>!
+	
 	func setupFRC() {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
@@ -35,19 +47,12 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		super.viewDidAppear(animated)
 		updateSnapshot()
 		
-		FeedReader.subscribe(to: "https://www.unz.com/xfeed/rss/author/steve-sailer/") { channel in
-			print("downloaded channel named: \(channel.title)")
-		}
+		FeedReader.subscribe(to: "https://theamericansun.com/rss")
 	}
 	
-	//MARK: UITableView Diffable Data Source
-	private lazy var diffableDataSource: UITableViewDiffableDataSource<Int, Channel> = {
-		UITableViewDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
-			let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-			cell.textLabel?.text = channel.title
-			return cell
-		}
-	}()
+	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		updateSnapshot()
+	}
 	
 	func updateSnapshot(animated: Bool = true) {
         var currentSnapshot = NSDiffableDataSourceSnapshot<Int, Channel>()
@@ -64,14 +69,6 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		vc.channel = selectedChannel
 		navigationController?.pushViewController(vc, animated: true)
 	}
-	
-	//MARK: Fetched Results Controller
-	private var frc: NSFetchedResultsController<Channel>!
-	
-	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-		updateSnapshot()
-	}
-
 	
 }
 

@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class ChannelsVC: UITableViewController {
+class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 
 	//MARK: IBActions
 	@IBAction func addButtonTapped(_ sender: Any) {
@@ -21,8 +21,8 @@ class ChannelsVC: UITableViewController {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
 		fetch.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-		self.frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
-		//result.delegate = self
+		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		frc.delegate = self
 		
 		do {
 			try frc.performFetch()
@@ -34,12 +34,10 @@ class ChannelsVC: UITableViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		updateSnapshot()
-		/*
-		FeedReader.subscribe(to: "https://www.econlib.org/author/bcaplan/feed") { channel in
-			var current = self.diffableDataSource.snapshot()
-			current.appendItems([channel])
-			self.diffableDataSource.apply(current, animatingDifferences: true)
-		}*/
+		
+		FeedReader.subscribe(to: "https://www.unz.com/xfeed/rss/author/steve-sailer/") { channel in
+			print("downloaded channel named: \(channel.title)")
+		}
 	}
 	
 	//MARK: UITableView Diffable Data Source
@@ -58,46 +56,22 @@ class ChannelsVC: UITableViewController {
 		diffableDataSource.apply(currentSnapshot, animatingDifferences: animated)
     }
 	
-	//MARK: UITableView Data Source
-	/*
-	private lazy var tableData: [Channel] = {
-		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
-		fetch.predicate = nil
-		fetch.sortDescriptors = []
-		let results = try! CoreData.shared.mainContext.fetch(fetch)
-		return results
-	}()*/
-	
-	/*
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell()
-		cell.textLabel?.text = tableData[indexPath.row].title
-		return cell
-	}
-	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return tableData.count
-	}
-	
 	//MARK: UITableView Delegate
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let selectedChannel = tableData[indexPath.row]
+		let selectedChannel = frc.fetchedObjects![indexPath.row]
 		let vc = UIStoryboard.instantiate("ItemListVC", as: ItemListVC.self)
 		vc.navigationItem.title = selectedChannel.title
 		vc.channel = selectedChannel
 		navigationController?.pushViewController(vc, animated: true)
 	}
-	*/
+	
 	//MARK: Fetched Results Controller
 	private var frc: NSFetchedResultsController<Channel>!
-	/*
-	func updateSnapshot() {
-		let diffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<Int, Channel>()
-		diffableDataSourceSnapshot.appendSections([0])
-		diffableDataSourceSnapshot.appendItems(frc.fetchedObjects ?? [])
-		diffableDataSource?.apply(self.diffableDataSourceSnapshot, animatingDifferences: true)
-	}*/
 	
+	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		updateSnapshot()
+	}
+
 	
 }
 

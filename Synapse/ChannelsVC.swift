@@ -14,7 +14,29 @@ class ChannelsVC: UITableViewController {
 		super.viewDidLoad()
 		//FeedReader.subscribe(to: "https://www.econlib.org/author/bcaplan/feed")
 		//FeedReader.subscribe(to: "https://overcomingbias.com/feed")
+		tableView.dataSource = diffableDataSource
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		updateUI()
+	}
+	//MARK: UITableView Diffable Data Source
+	private lazy var diffableDataSource: UITableViewDiffableDataSource<Int, Channel> = {
+		UITableViewDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
+			let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+			cell.textLabel?.text = channel.title
+			return cell
+		}
+	}()
+	
+	func updateUI(animated: Bool = true) {
+        var currentSnapshot = NSDiffableDataSourceSnapshot<Int, Channel>()
+        currentSnapshot.appendSections([0])
+        currentSnapshot.appendItems(tableData, toSection: 0)
+		diffableDataSource.apply(currentSnapshot, animatingDifferences: animated)
+    }
 	
 	//MARK: UITableView Data Source
 	private lazy var tableData: [Channel] = {
@@ -25,6 +47,7 @@ class ChannelsVC: UITableViewController {
 		return results
 	}()
 	
+	/*
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell()
 		cell.textLabel?.text = tableData[indexPath.row].title
@@ -43,6 +66,9 @@ class ChannelsVC: UITableViewController {
 		vc.channel = selectedChannel
 		navigationController?.pushViewController(vc, animated: true)
 	}
+	*/
+	//MARK: Fetched Results Controller
+	
 	
 	
 }

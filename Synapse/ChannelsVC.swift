@@ -12,16 +12,36 @@ class ChannelsVC: UITableViewController {
 	//MARK: UIViewController
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		//FeedReader.subscribe(to: "https://www.econlib.org/author/bcaplan/feed")
-		//FeedReader.subscribe(to: "https://overcomingbias.com/feed")
 		tableView.dataSource = diffableDataSource
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+		setupFRC()
+	}
+	
+	func setupFRC() {
+		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
+		fetch.predicate = nil
+		fetch.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+		self.frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		//result.delegate = self
+		
+		do {
+			try frc.performFetch()
+		} catch {
+			print("Error performing FRC fetch: \(error)")
+		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		updateUI()
+		updateSnapshot()
+		/*
+		FeedReader.subscribe(to: "https://www.econlib.org/author/bcaplan/feed") { channel in
+			var current = self.diffableDataSource.snapshot()
+			current.appendItems([channel])
+			self.diffableDataSource.apply(current, animatingDifferences: true)
+		}*/
 	}
+	
 	//MARK: UITableView Diffable Data Source
 	private lazy var diffableDataSource: UITableViewDiffableDataSource<Int, Channel> = {
 		UITableViewDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
@@ -31,21 +51,22 @@ class ChannelsVC: UITableViewController {
 		}
 	}()
 	
-	func updateUI(animated: Bool = true) {
+	func updateSnapshot(animated: Bool = true) {
         var currentSnapshot = NSDiffableDataSourceSnapshot<Int, Channel>()
         currentSnapshot.appendSections([0])
-        currentSnapshot.appendItems(tableData, toSection: 0)
+		currentSnapshot.appendItems(frc.fetchedObjects ?? [], toSection: 0)
 		diffableDataSource.apply(currentSnapshot, animatingDifferences: animated)
     }
 	
 	//MARK: UITableView Data Source
+	/*
 	private lazy var tableData: [Channel] = {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
 		fetch.sortDescriptors = []
 		let results = try! CoreData.shared.mainContext.fetch(fetch)
 		return results
-	}()
+	}()*/
 	
 	/*
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,7 +89,14 @@ class ChannelsVC: UITableViewController {
 	}
 	*/
 	//MARK: Fetched Results Controller
-	
+	private var frc: NSFetchedResultsController<Channel>!
+	/*
+	func updateSnapshot() {
+		let diffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<Int, Channel>()
+		diffableDataSourceSnapshot.appendSections([0])
+		diffableDataSourceSnapshot.appendItems(frc.fetchedObjects ?? [])
+		diffableDataSource?.apply(self.diffableDataSourceSnapshot, animatingDifferences: true)
+	}*/
 	
 	
 }

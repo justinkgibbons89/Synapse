@@ -62,18 +62,23 @@ class FeedReader {
 	}
 	
 	//MARK: Subscribing
-	public static func subscribe(to channelPath: String) {
+	public static func subscribe(to channelPath: String, completion: @escaping (Channel) -> Void) {
 		Networking().download(channelPath) { data in
 			let feedReader = FeedReader(data: data)
 			feedReader.save()
+			DispatchQueue.main.async {
+				completion(feedReader.channel())
+			}
 		}
 	}
 	
 	public static func analyze(_ channelPath: String) {
-		print("Analyzing...")
 		Networking().download(channelPath) { (data) in
 			let feedReader = FeedReader(data: data)
 			let items = feedReader.items()
+			for item in items {
+				print(item)
+			}
 		}
 	}
 }

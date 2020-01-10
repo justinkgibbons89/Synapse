@@ -14,12 +14,13 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		super.viewDidLoad()
 		tableView.dataSource = diffableDataSource
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+		tableView.delegate = self
 		setupFRC()
 	}
 	
 	//MARK: UITableView Diffable Data Source
-	private lazy var diffableDataSource: UITableViewDiffableDataSource<Int, Channel> = {
-		UITableViewDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
+	private lazy var diffableDataSource: UXDiffableDataSource<Int, Channel> = {
+		UXDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
 			let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 			cell.textLabel?.text = channel.title
 			return cell
@@ -68,6 +69,22 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		vc.navigationItem.title = selectedChannel.title
 		vc.channel = selectedChannel
 		navigationController?.pushViewController(vc, animated: true)
+	}
+	
+	//MARK: Swipe Actions
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		print("Confidugin swipe actions")
+		guard let selectedChannel = frc.fetchedObjects?[indexPath.row] else {
+			print("Couldn't find Channel at index path \(indexPath)"); return nil
+		}
+		
+		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
+			successHandler(true)
+			CoreData.shared.mainContext.delete(selectedChannel)
+		}
+		
+		let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
+		return swipeActions
 	}
 	
 }

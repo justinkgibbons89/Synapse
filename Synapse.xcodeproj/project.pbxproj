@@ -76,7 +76,6 @@
 				D001677B23C6B08B003AD833 /* ChannelsVC.swift */,
 				D0BF467623C833F900AF4BC8 /* ItemListVC.swift */,
 				D0A8FD2223C6F62A00E0E7DC /* AddFeedVC.swift */,
-				D0A8FD2023C6F5C000E0E7DC /* Extensions.swift */,
 				D0A8FD2823C7BED300E0E7DC /* Library */,
 				D001678F23C6B217003AD833 /* Storyboards */,
 				D001678E23C6B208003AD833 /* Resources */,
@@ -118,6 +117,7 @@
 				D0A8FD1E23C6F2FE00E0E7DC /* CoreData.swift */,
 				D0A8FD2423C6F9F800E0E7DC /* FeedReader.swift */,
 				D0A8FD2623C6FA1700E0E7DC /* Networking.swift */,
+				D0A8FD2023C6F5C000E0E7DC /* Extensions.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";

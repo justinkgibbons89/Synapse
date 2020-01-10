@@ -7,3 +7,11 @@ extension UIStoryboard {
         return vc as! T
     }
 }
+
+class UXDiffableDataSource<S: Hashable, T: Hashable>: UITableViewDiffableDataSource<S, T> {
+    // ...
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    // ...
+}

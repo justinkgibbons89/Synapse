@@ -51,7 +51,6 @@ class FeedReader {
 		item.link = indexer["link"].element?.text
 		item.content = indexer["content:encoded"].element?.text
 		item.channel = channel()
-		print("built item: \(item)")
 		return item
 	}
 	
@@ -83,6 +82,13 @@ class FeedReader {
 			for item in items {
 				print(item)
 			}
+		}
+	}
+	
+	public static func xml(for channelPath: String, completion: @escaping (XMLIndexer) -> Void) {
+		Networking().download(channelPath) { (data) in
+			let xmlResult = SWXMLHash.parse(data)
+			completion(xmlResult)
 		}
 	}
 }

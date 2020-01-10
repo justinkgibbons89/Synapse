@@ -47,8 +47,54 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		updateSnapshot()
+		//FeedReader.subscribe(to: "https://theamericansun.com/rss")
+		//FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
+		/*
+		FeedReader.xml(for: "https://slatestarcodex.com/feed") { (xml) in
+			let title = xml["rss"]["channel"]["title"].element?.text
+			print(title as Any)
+			let url = xml["rss"]["channel"]["atom:link"].element?.attribute(by: "href")?.text
+			print(url as Any)
+			
+			print(" ")
+			let atom = xml["rss"]["channel"]["atom:link"].element
+			print("atom elem: \(atom as Any)")
+			print("atom name: \(atom?.name as Any)")
+			print("atom attribs: \(atom?.allAttributes as Any)")
+			print(" ")
+		}*/
 		
-		FeedReader.subscribe(to: "https://theamericansun.com/rss")
+		FeedReader.xml(for: "https://theamericansun.com/rss") { (xml) in
+			let title = xml["rss"]["channel"]["title"].element?.text
+			print(title as Any)
+			let url = xml["rss"]["channel"]["atom:link"].element?.attribute(by: "href")?.text
+			print(url as Any)
+			
+			print(" ")
+			let atom = xml["rss"]["channel"]["atom:link"].element
+			print("atom elem: \(atom as Any)")
+			print("atom name: \(atom?.name as Any)")
+			print("atom attribs: \(atom?.allAttributes as Any)")
+			
+			for xmlChild in xml["rss"]["channel"].children[0...5] {
+				print(xmlChild)
+			}
+			
+			let result = try? xml["rss"]["channel"].byKey("atom:link")
+			print("R: \(result as Any)")
+			print(result?.element?.attribute(by: "href")?.text as Any)
+			print(" ")
+			
+			let hmm = xml["rss"]["channel"]["atom:link"].filterAll { (element, index) -> Bool in
+				if let attribute = element.attribute(by: "rel") {
+					return attribute.text == "self"
+				} else {
+					print("no rel attribute")
+					return false
+				}
+			}
+			print("hmm: \(hmm.element?.attribute(by: "href")?.text)")
+		}
 	}
 	
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -73,7 +119,6 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	
 	//MARK: Swipe Actions
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		print("Confidugin swipe actions")
 		guard let selectedChannel = frc.fetchedObjects?[indexPath.row] else {
 			print("Couldn't find Channel at index path \(indexPath)"); return nil
 		}

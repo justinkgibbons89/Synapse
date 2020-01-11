@@ -47,54 +47,8 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		updateSnapshot()
-		//FeedReader.subscribe(to: "https://theamericansun.com/rss")
-		//FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
-		/*
-		FeedReader.xml(for: "https://slatestarcodex.com/feed") { (xml) in
-			let title = xml["rss"]["channel"]["title"].element?.text
-			print(title as Any)
-			let url = xml["rss"]["channel"]["atom:link"].element?.attribute(by: "href")?.text
-			print(url as Any)
-			
-			print(" ")
-			let atom = xml["rss"]["channel"]["atom:link"].element
-			print("atom elem: \(atom as Any)")
-			print("atom name: \(atom?.name as Any)")
-			print("atom attribs: \(atom?.allAttributes as Any)")
-			print(" ")
-		}*/
-		
-		FeedReader.xml(for: "https://theamericansun.com/rss") { (xml) in
-			let title = xml["rss"]["channel"]["title"].element?.text
-			print(title as Any)
-			let url = xml["rss"]["channel"]["atom:link"].element?.attribute(by: "href")?.text
-			print(url as Any)
-			
-			print(" ")
-			let atom = xml["rss"]["channel"]["atom:link"].element
-			print("atom elem: \(atom as Any)")
-			print("atom name: \(atom?.name as Any)")
-			print("atom attribs: \(atom?.allAttributes as Any)")
-			
-			for xmlChild in xml["rss"]["channel"].children[0...5] {
-				print(xmlChild)
-			}
-			
-			let result = try? xml["rss"]["channel"].byKey("atom:link")
-			print("R: \(result as Any)")
-			print(result?.element?.attribute(by: "href")?.text as Any)
-			print(" ")
-			
-			let hmm = xml["rss"]["channel"]["atom:link"].filterAll { (element, index) -> Bool in
-				if let attribute = element.attribute(by: "rel") {
-					return attribute.text == "self"
-				} else {
-					print("no rel attribute")
-					return false
-				}
-			}
-			print("hmm: \(hmm.element?.attribute(by: "href")?.text)")
-		}
+//		FeedReader.subscribe(to: "https://theamericansun.com/rss")
+//		FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
 	}
 	
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -123,9 +77,11 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 			print("Couldn't find Channel at index path \(indexPath)"); return nil
 		}
 		
+		let context = CoreData.shared.mainContext
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
 			successHandler(true)
-			CoreData.shared.mainContext.delete(selectedChannel)
+			context.delete(selectedChannel)
+			try! context.save()
 		}
 		
 		let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])

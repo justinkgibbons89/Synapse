@@ -10,12 +10,18 @@ class CoreData {
 		persistentContainer.viewContext
 	}
 	
-	func delete<T: NSManagedObject>(type: T.Type) {
+	func deleteAllForEntity<T: NSManagedObject>(type: T.Type) {
+		let context = Self.shared.mainContext
 		let fetch = T.fetchRequest() as! NSFetchRequest<T>
 		fetch.predicate = nil
 		fetch.sortDescriptors = []
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetch as! NSFetchRequest<NSFetchRequestResult>)
-		try! Self.shared.mainContext.execute(deleteRequest)
+		do {
+			try context.execute(deleteRequest)
+			try context.save()
+		} catch {
+			print("Error deleting managed objects: \(error)")
+		}
 	}
 	
 

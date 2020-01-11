@@ -18,12 +18,23 @@ class FeedReader {
 	private var channelElement: XMLIndexer { xml["rss"]["channel"] }
 	private var itemElements: [XMLIndexer] { channelElement["item"].all }
 	
+	private func atom() -> String? {
+		let result = channelElement["atom:link"].filterAll { (element, index) -> Bool in
+			if let attribute = element.attribute(by: "rel") {
+				return attribute.text == "self"
+			} else {
+				return false
+			}
+		}
+		return result.element?.attribute(by: "href")?.text
+	}
+	
 	private lazy var cachedChannel: Channel = {
 		let channel = Channel(context: context)
 		channel.title = channelElement["title"].element?.text
 		channel.link = channelElement["link"].element?.text
 		channel.desc = channelElement["description"].element?.text
-		channel.url = channelElement["atom:link"].element?.attribute(by: "href")?.text
+		channel.url = atom()
 		channel.language = channelElement["language"].element?.text
 		return channel
 	}()

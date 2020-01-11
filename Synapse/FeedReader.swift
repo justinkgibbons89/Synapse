@@ -36,6 +36,7 @@ class FeedReader {
 		channel.desc = channelElement["description"].element?.text
 		channel.url = atom()
 		channel.language = channelElement["language"].element?.text
+		channel.subscribeDate = Date()
 		return channel
 	}()
 
@@ -61,6 +62,7 @@ class FeedReader {
 		item.desc = indexer["description"].element?.text
 		item.link = indexer["link"].element?.text
 		item.content = indexer["content:encoded"].element?.text
+		item.pubDate = try? DateManager.parse(indexer["pubDate"].element?.text ?? "")
 		item.channel = channel()
 		return item
 	}

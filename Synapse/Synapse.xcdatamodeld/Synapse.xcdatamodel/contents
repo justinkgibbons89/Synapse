@@ -4,6 +4,7 @@
         <attribute name="desc" attributeType="String"/>
         <attribute name="language" optional="YES" attributeType="String"/>
         <attribute name="link" attributeType="String"/>
+        <attribute name="subscribeDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="url" attributeType="String"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="channel" inverseEntity="Item"/>
@@ -12,11 +13,12 @@
         <attribute name="content" attributeType="String"/>
         <attribute name="desc" attributeType="String"/>
         <attribute name="link" attributeType="String"/>
+        <attribute name="pubDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Channel" inverseName="items" inverseEntity="Channel"/>
     </entity>
     <elements>
-        <element name="Channel" positionX="-63" positionY="-18" width="128" height="133"/>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Channel" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

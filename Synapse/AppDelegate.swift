@@ -4,22 +4,9 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		// Override point for customization after application launch.
-		/*
-		let item = Item(context: CoreData.shared.mainContext)
-		item.title = "Hello, World!"
-		item.content = "Content goes here"
-		item.desc = "subject lien"
-		item.link = "https://google.com"
-		try! CoreData.shared.mainContext.save()
-		*/
-		/*
-		let coreData = CoreData.shared
-		let context = coreData.mainContext
-		coreData.delete(type: Channel.self)*/
+		//CoreData.shared.deleteAllForEntity(type: Channel.self)
+		//CoreData.shared.deleteAllForEntity(type: Item.self)
 		return true
 	}
 

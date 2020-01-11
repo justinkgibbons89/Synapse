@@ -18,6 +18,13 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		setupFRC()
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+			super.viewDidAppear(animated)
+			updateSnapshot()
+//			FeedReader.subscribe(to: "https://theamericansun.com/rss")
+//			FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
+		}
+	
 	//MARK: UITableView Diffable Data Source
 	private lazy var diffableDataSource: UXDiffableDataSource<Int, Channel> = {
 		UXDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
@@ -33,7 +40,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	func setupFRC() {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
-		fetch.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+		fetch.sortDescriptors = [NSSortDescriptor(key: "subscribeDate", ascending: true)]
 		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		frc.delegate = self
 		
@@ -42,13 +49,6 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		} catch {
 			print("Error performing FRC fetch: \(error)")
 		}
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		updateSnapshot()
-//		FeedReader.subscribe(to: "https://theamericansun.com/rss")
-//		FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
 	}
 	
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

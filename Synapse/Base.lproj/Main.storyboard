@@ -79,12 +79,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <searchBar key="tableFooterView" contentMode="redraw" id="kQF-Ow-gDa">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <connections>
                             <outlet property="dataSource" destination="5V9-T1-T65" id="NOF-ZO-MzT"/>
                             <outlet property="delegate" destination="5V9-T1-T65" id="SKJ-1k-gkK"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Feed" id="bdN-hC-m3g"/>
+                    <connections>
+                        <outlet property="searchBar" destination="kQF-Ow-gDa" id="JFQ-Lp-VRi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogf-Pd-xdm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

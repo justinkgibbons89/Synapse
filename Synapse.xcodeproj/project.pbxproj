@@ -17,6 +17,7 @@
 		D001679323C6EEA5003AD833 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = D001679223C6EEA5003AD833 /* SWXMLHash */; };
 		D054C02023C9736D004E7B82 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054C01F23C9736D004E7B82 /* DateManager.swift */; };
 		D054C02223C994DB004E7B82 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054C02123C994DB004E7B82 /* Path.swift */; };
+		D054C02423C99661004E7B82 /* ItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054C02323C99661004E7B82 /* ItemVC.swift */; };
 		D0A8FD1F23C6F2FE00E0E7DC /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8FD1E23C6F2FE00E0E7DC /* CoreData.swift */; };
 		D0A8FD2123C6F5C000E0E7DC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8FD2023C6F5C000E0E7DC /* Extensions.swift */; };
 		D0A8FD2323C6F62A00E0E7DC /* AddFeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8FD2223C6F62A00E0E7DC /* AddFeedVC.swift */; };
@@ -37,6 +38,7 @@
 		D001678823C6B08D003AD833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D054C01F23C9736D004E7B82 /* DateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		D054C02123C994DB004E7B82 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		D054C02323C99661004E7B82 /* ItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVC.swift; sourceTree = "<group>"; };
 		D0A8FD1E23C6F2FE00E0E7DC /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		D0A8FD2023C6F5C000E0E7DC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D0A8FD2223C6F62A00E0E7DC /* AddFeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedVC.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				D001679023C6B224003AD833 /* Delegates */,
 				D001677B23C6B08B003AD833 /* ChannelsVC.swift */,
 				D0BF467623C833F900AF4BC8 /* ItemListVC.swift */,
+				D054C02323C99661004E7B82 /* ItemVC.swift */,
 				D0A8FD2223C6F62A00E0E7DC /* AddFeedVC.swift */,
 				D0A8FD2823C7BED300E0E7DC /* Library */,
 				D001678F23C6B217003AD833 /* Storyboards */,
@@ -210,6 +213,7 @@
 				D0A8FD2123C6F5C000E0E7DC /* Extensions.swift in Sources */,
 				D0A8FD2523C6F9F800E0E7DC /* FeedReader.swift in Sources */,
 				D0A8FD2723C6FA1700E0E7DC /* Networking.swift in Sources */,
+				D054C02423C99661004E7B82 /* ItemVC.swift in Sources */,
 				D001677823C6B08B003AD833 /* AppDelegate.swift in Sources */,
 				D001677A23C6B08B003AD833 /* SceneDelegate.swift in Sources */,
 				D054C02023C9736D004E7B82 /* DateManager.swift in Sources */,

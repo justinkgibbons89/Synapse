@@ -54,4 +54,15 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		currentSnapshot.appendItems(frc.fetchedObjects ?? [], toSection: 0)
 		diffableDataSource.apply(currentSnapshot, animatingDifferences: animated)
     }
+	
+	//MARK: UITableView Delegate
+	public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let selectedItem = frc.fetchedObjects?[indexPath.row] else {
+			print("Couldn't find item at index: \(indexPath.row)"); return
+		}
+		let vc = UIStoryboard.instantiate("ItemVC", as: ItemVC.self)
+		vc.item = selectedItem
+		vc.navigationItem.title = selectedItem.title
+		navigationController?.pushViewController(vc, animated: true)
+	}
 }

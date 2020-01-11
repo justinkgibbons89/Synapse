@@ -66,10 +66,48 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="63u-Zy-GA9"/>
+                    <connections>
+                        <segue destination="VeE-Yz-edb" kind="show" identifier="Article segue" id="1Tw-a8-iRY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sn6-RT-ra9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1514" y="-290"/>
+        </scene>
+        <!--ItemVC-->
+        <scene sceneID="uwb-eO-bmh">
+            <objects>
+                <viewController storyboardIdentifier="ItemVC" id="VeE-Yz-edb" customClass="ItemVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yQe-Pm-KKv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gIR-jd-xsz">
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gIR-jd-xsz" firstAttribute="leading" secondItem="DNd-P1-zs7" secondAttribute="leading" id="6sH-tv-E0f"/>
+                            <constraint firstItem="gIR-jd-xsz" firstAttribute="top" secondItem="yQe-Pm-KKv" secondAttribute="topMargin" id="htp-f3-4wm"/>
+                            <constraint firstItem="DNd-P1-zs7" firstAttribute="bottom" secondItem="gIR-jd-xsz" secondAttribute="bottom" id="iev-ip-wiI"/>
+                            <constraint firstItem="DNd-P1-zs7" firstAttribute="trailing" secondItem="gIR-jd-xsz" secondAttribute="trailing" id="mn7-3u-10h"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DNd-P1-zs7"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="tMj-Jr-UJU"/>
+                    <connections>
+                        <outlet property="textView" destination="gIR-jd-xsz" id="mhi-iW-J3E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VCA-bN-Tzk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2361" y="-291"/>
         </scene>
         <!--Add Feed-->
         <scene sceneID="TgM-uo-EkC">

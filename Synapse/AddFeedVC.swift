@@ -15,15 +15,14 @@ class AddFeedVC: UITableViewController, UISearchBarDelegate {
 	//MARK: UISearchBar Delegate
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		if let query = searchBar.text?.lowercased() {
-			FeedReader.subscribe(to: query) { channel in
-				print("Subscribed to channel: \(channel)")
-			}
+			let path = Path.normalized(for: query)
+			FeedReader.subscribe(to: path)
 		}
 		searchBar.resignFirstResponder()
+		navigationController?.popViewController(animated: true)
 	}
 	
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		print("Scrolled!")
 		searchBar.resignFirstResponder()
 	}
 }

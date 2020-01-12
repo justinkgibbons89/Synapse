@@ -13,6 +13,8 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		configureFetchedResultsController()
 		configureRefreshControl()
 		updateSnapshot(animated: false)
+		
+		print("Most recent: \(channel.mostRecentDate as Any)")
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -48,7 +50,7 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	func configureFetchedResultsController() {
 		let fetch = Item.fetchRequest() as NSFetchRequest<Item>
 		fetch.predicate = NSPredicate(format: "channel = %@", channel)
-		fetch.sortDescriptors = [NSSortDescriptor(key: "pubDate", ascending: false)]
+		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Item.pubDate, ascending: false)]
 		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		frc.delegate = self
 		

@@ -40,7 +40,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	func configureFetchedResultsController() {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
-		fetch.sortDescriptors = [NSSortDescriptor(key: "subscribeDate", ascending: true)]
+		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Channel.subscribeDate, ascending: true)]
 		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		frc.delegate = self
 		

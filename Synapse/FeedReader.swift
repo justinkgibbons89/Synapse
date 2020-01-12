@@ -37,6 +37,7 @@ class FeedReader {
 		channel.url = atom()
 		channel.language = channelElement["language"].element?.text
 		channel.subscribeDate = Date()
+		channel.lastUpdate = Date()
 		return channel
 	}()
 
@@ -56,6 +57,19 @@ class FeedReader {
 		return results
 	}
 	
+	@discardableResult
+	public func items(after limitDate: Date) -> [Item] {
+		var results: [Item] = []
+		for itemElement in itemElements {
+			let pubDate = try? DateManager.parse(itemElement["pubDate"].element?.text ?? "")
+			if pubDate! > limitDate {
+				let item = self.item(from: itemElement)
+				results.append(item)
+			}
+		}
+		return results
+	}
+	
 	private func item(from indexer: XMLIndexer) -> Item {
 		let item = Item(context: context)
 		item.title = indexer["title"].element?.text
@@ -68,8 +82,7 @@ class FeedReader {
 	}
 	
 	public func save() {
-		channel()
-		items()
+		channel(); items()
 		do {
 			try context.save()
 		} catch {
@@ -104,4 +117,23 @@ class FeedReader {
 			completion(xmlResult)
 		}
 	}
+	
+	public static func getNewItems(for channel: Channel, completion: @escaping () -> Void) {
+		guard let path = channel.url else {
+			print("Couldn't unwrap URL for channel \(channel)"); return
+		}
+		
+		Networking().download(path) { (data) in
+			let feedReader = FeedReader(data: data)
+			
+			if let lastUpdate = channel.lastUpdate {
+				feedReader.items(after: lastUpdate)
+			} else {
+				feedReader.items()
+			}
+			
+			completion()
+		}
+	}
 }
+

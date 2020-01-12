@@ -9,13 +9,28 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	//MARK: UIViewController
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		setupFRC()
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+		configureFetchedResultsController()
+		configureRefreshControl()
+		updateSnapshot(animated: false)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-		updateSnapshot()
+	}
+	
+	//MARK: Refresh Control
+	func configureRefreshControl() {
+		tableView.refreshControl = UIRefreshControl()
+		tableView.refreshControl?.addTarget(self, action: #selector(refreshPulled), for: .valueChanged)
+	}
+	
+	@objc private func refreshPulled() {
+		FeedReader.getNewItems(for: channel) {
+			DispatchQueue.main.async {
+				self.tableView.refreshControl?.endRefreshing()
+			}
+		}
 	}
 	
 	//MARK: UITableView Diffable Data Source
@@ -30,7 +45,7 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	//MARK: Fetched Results Controller
 	private var frc: NSFetchedResultsController<Item>!
 	
-	func setupFRC() {
+	func configureFetchedResultsController() {
 		let fetch = Item.fetchRequest() as NSFetchRequest<Item>
 		fetch.predicate = NSPredicate(format: "channel = %@", channel)
 		fetch.sortDescriptors = [NSSortDescriptor(key: "pubDate", ascending: false)]

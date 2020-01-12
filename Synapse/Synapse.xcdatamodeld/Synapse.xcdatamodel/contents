@@ -3,6 +3,7 @@
     <entity name="Channel" representedClassName="Channel" syncable="YES" codeGenerationType="class">
         <attribute name="desc" attributeType="String"/>
         <attribute name="language" optional="YES" attributeType="String"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="link" attributeType="String"/>
         <attribute name="subscribeDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
@@ -18,7 +19,7 @@
         <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Channel" inverseName="items" inverseEntity="Channel"/>
     </entity>
     <elements>
-        <element name="Channel" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="Channel" positionX="-63" positionY="-18" width="128" height="163"/>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

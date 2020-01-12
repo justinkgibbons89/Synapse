@@ -12,6 +12,5 @@ class ItemVC: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		textView.text = item.content
-		
 	}
 }

@@ -15,15 +15,15 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		tableView.dataSource = diffableDataSource
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 		tableView.delegate = self
-		setupFRC()
+		configureFetchedResultsController()
+		updateSnapshot(animated: false)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 			super.viewDidAppear(animated)
-			updateSnapshot()
 //			FeedReader.subscribe(to: "https://theamericansun.com/rss")
 //			FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
-		}
+	}
 	
 	//MARK: UITableView Diffable Data Source
 	private lazy var diffableDataSource: UXDiffableDataSource<Int, Channel> = {
@@ -37,7 +37,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	//MARK: Fetched Results Controller
 	private var frc: NSFetchedResultsController<Channel>!
 	
-	func setupFRC() {
+	func configureFetchedResultsController() {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
 		fetch.sortDescriptors = [NSSortDescriptor(key: "subscribeDate", ascending: true)]

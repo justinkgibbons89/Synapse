@@ -52,7 +52,7 @@
             </objects>
             <point key="canvasLocation" x="606" y="-638"/>
         </scene>
-        <!--Item ListVC-->
+        <!--Items-->
         <scene sceneID="J87-L4-TaQ">
             <objects>
                 <tableViewController storyboardIdentifier="ItemListVC" id="lAq-VQ-hUu" customClass="ItemListVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
@@ -65,7 +65,7 @@
                             <outlet property="delegate" destination="lAq-VQ-hUu" id="pwx-YK-ceA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="63u-Zy-GA9"/>
+                    <navigationItem key="navigationItem" title="Items" id="63u-Zy-GA9"/>
                     <connections>
                         <segue destination="VeE-Yz-edb" kind="show" identifier="Article segue" id="1Tw-a8-iRY"/>
                     </connections>
@@ -74,7 +74,7 @@
             </objects>
             <point key="canvasLocation" x="1514" y="-290"/>
         </scene>
-        <!--ItemVC-->
+        <!--Item-->
         <scene sceneID="uwb-eO-bmh">
             <objects>
                 <viewController storyboardIdentifier="ItemVC" id="VeE-Yz-edb" customClass="ItemVC" customModule="Synapse" customModuleProvider="target" sceneMemberID="viewController">
@@ -100,8 +100,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DNd-P1-zs7"/>
                     </view>
-                    <navigationItem key="navigationItem" id="tMj-Jr-UJU"/>
+                    <navigationItem key="navigationItem" title="Item" id="tMj-Jr-UJU">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="bookmark" catalog="system" id="oDX-kE-LjV">
+                            <connections>
+                                <action selector="bookmarkButtonTapped:" destination="VeE-Yz-edb" id="OTM-Df-RCg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="bookmarkButton" destination="oDX-kE-LjV" id="Wh6-hG-pfm"/>
                         <outlet property="textView" destination="gIR-jd-xsz" id="mhi-iW-J3E"/>
                     </connections>
                 </viewController>
@@ -172,4 +179,7 @@
             <point key="canvasLocation" x="-1245" y="-261"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bookmark" catalog="system" width="56" height="64"/>
+    </resources>
 </document>

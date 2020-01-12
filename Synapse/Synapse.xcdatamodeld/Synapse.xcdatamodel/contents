@@ -13,6 +13,7 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="content" attributeType="String"/>
         <attribute name="desc" attributeType="String"/>
+        <attribute name="isBookmarked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="link" attributeType="String"/>
         <attribute name="pubDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
@@ -20,6 +21,6 @@
     </entity>
     <elements>
         <element name="Channel" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="148"/>
     </elements>
 </model>

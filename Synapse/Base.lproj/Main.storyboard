@@ -7,22 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item 2-->
-        <scene sceneID="brD-ve-e97">
-            <objects>
-                <viewController id="pJm-ug-pvd" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xdd-X5-TBb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="eh6-o7-x5c"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="rNe-la-vCh"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iVs-Ah-Bu0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-326" y="63"/>
-        </scene>
         <!--Bookmarks-->
         <scene sceneID="Tgx-jk-OVh">
             <objects>
@@ -47,8 +31,8 @@
             <objects>
                 <navigationController id="pZD-wJ-tY7" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Bookmarks" id="pv7-hP-sXp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="B5H-nx-zDw">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="B5H-nx-zDw">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -207,7 +191,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="jQw-jz-hIi" kind="relationship" relationship="viewControllers" id="7TR-Si-IoS"/>
-                        <segue destination="pJm-ug-pvd" kind="relationship" relationship="viewControllers" id="2AY-dl-Fdd"/>
                         <segue destination="pZD-wJ-tY7" kind="relationship" relationship="viewControllers" id="Sh4-9n-Gqi"/>
                     </connections>
                 </tabBarController>

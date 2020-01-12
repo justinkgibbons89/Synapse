@@ -42,4 +42,15 @@ class BookmarksVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 		updateSnapshot()
 	}
+	
+	//MARK: UITableView Delegate
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let selectedItem = fetchedResultsController.fetchedObjects?[indexPath.row] else {
+			print("Couldn't find item at index path \(indexPath)"); return
+		}
+		let vc = UIStoryboard.instantiate("ItemVC", as: ItemVC.self)
+		vc.item = selectedItem
+		vc.navigationItem.title = selectedItem.title
+		navigationController?.pushViewController(vc, animated: true)
+	}
 }

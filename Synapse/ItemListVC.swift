@@ -13,8 +13,6 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		configureFetchedResultsController()
 		configureRefreshControl()
 		updateSnapshot(animated: false)
-		
-		print("Most recent: \(channel.mostRecentDate as Any)")
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

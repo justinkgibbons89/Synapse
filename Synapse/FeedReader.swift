@@ -126,8 +126,8 @@ class FeedReader {
 		Networking().download(path) { (data) in
 			let feedReader = FeedReader(data: data)
 			
-			if let lastUpdate = channel.lastUpdate {
-				feedReader.items(after: lastUpdate)
+			if let mostRecent = channel.mostRecentDate {
+				feedReader.items(after: mostRecent)
 			} else {
 				feedReader.items()
 			}

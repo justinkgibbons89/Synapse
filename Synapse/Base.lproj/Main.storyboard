@@ -30,7 +30,7 @@
         <scene sceneID="dHf-oU-u3U">
             <objects>
                 <navigationController id="pZD-wJ-tY7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Bookmarks" id="pv7-hP-sXp"/>
+                    <tabBarItem key="tabBarItem" title="Bookmarks" image="bookmark.fill" catalog="system" id="pv7-hP-sXp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="B5H-nx-zDw">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -167,7 +167,7 @@
         <scene sceneID="7FC-6M-q8U">
             <objects>
                 <navigationController id="jQw-jz-hIi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feed" id="W4d-3d-1lh"/>
+                    <tabBarItem key="tabBarItem" title="Feed" image="square.stack.fill" catalog="system" id="W4d-3d-1lh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="hco-sL-m5A">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -201,5 +201,7 @@
     </scenes>
     <resources>
         <image name="bookmark" catalog="system" width="56" height="64"/>
+        <image name="bookmark.fill" catalog="system" width="56" height="64"/>
+        <image name="square.stack.fill" catalog="system" width="56" height="64"/>
     </resources>
 </document>

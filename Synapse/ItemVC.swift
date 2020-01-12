@@ -30,9 +30,9 @@ class ItemVC: UIViewController {
 	//MARK: UI Maps
 	private let mapBookmarkToImage: (Bool) -> UIImage = { isFavorite in
 		if isFavorite {
-			return UIImage(systemName: "heart.fill")!
+			return UIImage(systemName: "bookmark.fill")!
 		} else {
-			return UIImage(systemName: "heart")!
+			return UIImage(systemName: "bookmark")!
 		}
 	}
 }

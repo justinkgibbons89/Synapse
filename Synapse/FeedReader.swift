@@ -77,12 +77,17 @@ class FeedReader {
 		item.link = indexer["link"].element?.text
 		item.content = indexer["content:encoded"].element?.text
 		item.pubDate = try? DateManager.parse(indexer["pubDate"].element?.text ?? "")
-		item.channel = channel()
 		return item
 	}
 	
-	public func save() {
-		channel(); items()
+	func attach(channel: Channel, to items: [Item]) {
+		for item in items {
+			item.channel = channel
+		}
+	}
+	
+	public func saveNewChannelWithItems() {
+		attach(channel: channel(), to: items())
 		do {
 			try context.save()
 		} catch {
@@ -94,7 +99,7 @@ class FeedReader {
 	public static func subscribe(to channelPath: String, completion: ((Channel) -> Void)? = nil) {
 		Networking().download(channelPath) { data in
 			let feedReader = FeedReader(data: data)
-			feedReader.save()
+			feedReader.saveNewChannelWithItems()
 			DispatchQueue.main.async {
 				completion?(feedReader.channel())
 			}
@@ -127,11 +132,14 @@ class FeedReader {
 			let feedReader = FeedReader(data: data)
 			
 			if let mostRecent = channel.mostRecentDate {
-				feedReader.items(after: mostRecent)
+				let items = feedReader.items(after: mostRecent)
+				feedReader.attach(channel: channel, to: items)
 			} else {
-				feedReader.items()
+				let items = feedReader.items()
+				feedReader.attach(channel: channel, to: items)
 			}
 			
+			CoreData.shared.saveContext()
 			completion()
 		}
 	}

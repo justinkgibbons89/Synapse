@@ -80,4 +80,21 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		vc.navigationItem.title = selectedItem.title
 		navigationController?.pushViewController(vc, animated: true)
 	}
+	
+	//MARK: Swipe Actions
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		guard let selectedItem = frc.fetchedObjects?[indexPath.row] else {
+			print("Couldn't find Channel at index path \(indexPath)"); return nil
+		}
+		
+		let context = CoreData.shared.mainContext
+		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
+			successHandler(true)
+			context.delete(selectedItem)
+			try! context.save()
+		}
+		
+		let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
+		return swipeActions
+	}
 }

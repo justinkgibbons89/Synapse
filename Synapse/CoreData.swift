@@ -1,23 +1,24 @@
 import CoreData
 
-
 class CoreData {
 	
-	// MARK: - Core Data stack
+	//MARK: Shared Instance
 	static var shared = CoreData()
 	
-	var mainContext: NSManagedObjectContext {
+	//MARK: Computed Properties
+	var viewContext: NSManagedObjectContext {
 		persistentContainer.viewContext
 	}
 	
 	public func disposableContext() -> NSManagedObjectContext {
 		let newContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-		newContext.parent = mainContext
+		newContext.parent = viewContext
 		return newContext
 	}
 	
+	//MARK: Methods
 	func deleteAllForEntity<T: NSManagedObject>(type: T.Type) {
-		let context = Self.shared.mainContext
+		let context = Self.shared.viewContext
 		let fetch = T.fetchRequest() as! NSFetchRequest<T>
 		fetch.predicate = nil
 		fetch.sortDescriptors = []

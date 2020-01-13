@@ -49,7 +49,7 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		let fetch = Item.fetchRequest() as NSFetchRequest<Item>
 		fetch.predicate = NSPredicate(format: "channel = %@", channel)
 		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Item.pubDate, ascending: false)]
-		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
 		frc.delegate = self
 		
 		do {
@@ -87,7 +87,7 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 			print("Couldn't find Channel at index path \(indexPath)"); return nil
 		}
 		
-		let context = CoreData.shared.mainContext
+		let context = CoreData.shared.viewContext
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
 			successHandler(true)
 			context.delete(selectedItem)

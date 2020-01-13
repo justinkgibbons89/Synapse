@@ -5,7 +5,7 @@ import CoreData
 class FeedReader {
 	
 	//MARK: Initializer
-	internal init(data: Data, context: NSManagedObjectContext = CoreData.shared.mainContext) {
+	internal init(data: Data, context: NSManagedObjectContext = CoreData.shared.viewContext) {
 		self.context = context
 		self.xml = SWXMLHash.parse(data)
 	}

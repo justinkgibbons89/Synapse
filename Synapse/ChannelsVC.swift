@@ -41,7 +41,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
 		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Channel.subscribeDate, ascending: true)]
-		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
 		frc.delegate = self
 		
 		do {
@@ -77,7 +77,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 			print("Couldn't find Channel at index path \(indexPath)"); return nil
 		}
 		
-		let context = CoreData.shared.mainContext
+		let context = CoreData.shared.viewContext
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
 			successHandler(true)
 			context.delete(selectedChannel)

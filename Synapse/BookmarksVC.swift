@@ -33,7 +33,7 @@ class BookmarksVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		let fetch = Item.fetchRequest() as NSFetchRequest<Item>
 		fetch.predicate = NSPredicate(format: "isBookmarked = %@", NSNumber(booleanLiteral: true))
 		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Item.pubDate, ascending: true)]
-		let frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		let frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
 		try! frc.performFetch()
 		return frc
 	}()

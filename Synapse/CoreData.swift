@@ -10,6 +10,12 @@ class CoreData {
 		persistentContainer.viewContext
 	}
 	
+	public func disposableContext() -> NSManagedObjectContext {
+		let newContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+		newContext.parent = mainContext
+		return newContext
+	}
+	
 	func deleteAllForEntity<T: NSManagedObject>(type: T.Type) {
 		let context = Self.shared.mainContext
 		let fetch = T.fetchRequest() as! NSFetchRequest<T>

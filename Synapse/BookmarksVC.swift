@@ -12,7 +12,7 @@ class BookmarksVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		updateSnapshot(animated: false)
 	}
 	
-	//MARK: UIDiffableDataSource
+	//MARK: UITableView Data Source
 	private lazy var diffableDataSource =
 		UITableViewDiffableDataSource<Int, Item>(tableView: tableView) {
 			(tableView, indexPath, item) -> UITableViewCell? in
@@ -28,7 +28,6 @@ class BookmarksVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		diffableDataSource.apply(snap, animatingDifferences: animated)
 	}
 	
-	//MARK: NSFetchedResultsController
 	private var fetchedResultsController: NSFetchedResultsController<Item> = {
 		let fetch = Item.fetchRequest() as NSFetchRequest<Item>
 		fetch.predicate = NSPredicate(format: "isBookmarked = %@", NSNumber(booleanLiteral: true))

@@ -23,7 +23,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 			super.viewDidAppear(animated)
 	}
 	
-	//MARK: UITableView Diffable Data Source
+	//MARK: UITableView Data Source
 	private lazy var diffableDataSource: UXDiffableDataSource<Int, Channel> = {
 		UXDiffableDataSource<Int, Channel>(tableView: tableView) { (tableView, indexPath, channel) -> UITableViewCell? in
 			let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -32,14 +32,18 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		}
 	}()
 	
-	//MARK: Fetched Results Controller
 	private var frc: NSFetchedResultsController<Channel>!
 	
 	func configureFetchedResultsController() {
 		let fetch = Channel.fetchRequest() as NSFetchRequest<Channel>
 		fetch.predicate = nil
 		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Channel.subscribeDate, ascending: true)]
-		frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+		frc = NSFetchedResultsController(
+			fetchRequest: fetch,
+			managedObjectContext: CoreData.shared.viewContext,
+			sectionNameKeyPath: nil,
+			cacheName: nil
+		)
 		frc.delegate = self
 		
 		do {
@@ -49,16 +53,17 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		}
 	}
 	
-	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-		updateSnapshot()
-	}
-	
 	func updateSnapshot(animated: Bool = true) {
         var currentSnapshot = NSDiffableDataSourceSnapshot<Int, Channel>()
         currentSnapshot.appendSections([0])
 		currentSnapshot.appendItems(frc.fetchedObjects ?? [], toSection: 0)
 		diffableDataSource.apply(currentSnapshot, animatingDifferences: animated)
     }
+	
+	//MARK: NSFetchedResultsController Delegate
+	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		updateSnapshot()
+	}
 	
 	//MARK: UITableView Delegate
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -79,7 +84,7 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
 			successHandler(true)
 			context.delete(selectedChannel)
-			try! context.save()
+			try? context.save()
 		}
 		
 		let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])

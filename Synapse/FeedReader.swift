@@ -94,6 +94,12 @@ class FeedReader {
 			print("Error saving context w/channel and items: \(error)")
 		}
 	}
+}
+
+
+//MARK: - Convenience Methods
+
+extension FeedReader {
 	
 	//MARK: Subscribing
 	public static func subscribe(to channelPath: String, completion: ((Channel) -> Void)? = nil) {

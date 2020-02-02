@@ -33,7 +33,7 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		}
 	}
 	
-	//MARK: UITableView Diffable Data Source
+	//MARK: UITableView Data Source
 	private lazy var diffableDataSource: UXDiffableDataSource<Int, Item> = {
 		UXDiffableDataSource<Int, Item>(tableView: tableView) { (tableView, indexPath, item) -> UITableViewCell? in
 			let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -42,7 +42,6 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		}
 	}()
 	
-	//MARK: Fetched Results Controller
 	private var frc: NSFetchedResultsController<Item>!
 	
 	func configureFetchedResultsController() {
@@ -59,16 +58,17 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		}
 	}
 	
-	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-		updateSnapshot()
-	}
-	
 	func updateSnapshot(animated: Bool = true) {
         var currentSnapshot = NSDiffableDataSourceSnapshot<Int, Item>()
         currentSnapshot.appendSections([0])
 		currentSnapshot.appendItems(frc.fetchedObjects ?? [], toSection: 0)
 		diffableDataSource.apply(currentSnapshot, animatingDifferences: animated)
     }
+	
+	//MARK: NSFetchedResultsController Delegate
+	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		updateSnapshot()
+	}
 	
 	//MARK: UITableView Delegate
 	public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

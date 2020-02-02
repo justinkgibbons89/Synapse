@@ -27,7 +27,7 @@ class ItemVC: UIViewController {
 			.store(in: &cancellables)
 	}
 	
-	//MARK: UI Maps
+	//MARK: ViewModel Mapping
 	private let mapBookmarkToImage: (Bool) -> UIImage = { isFavorite in
 		if isFavorite {
 			return UIImage(systemName: "bookmark.fill")!

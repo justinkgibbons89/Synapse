@@ -11,7 +11,8 @@ class CoreData {
 		persistentContainer.viewContext
 	}
 	
-	/// A context for editing, caching or other discarable changes. Changes aren't committed to the persistent store until it's parent, `viewcontext` also saved.
+	/// A context for editing, caching or other discardable changes. Changes aren't committed to the persistent
+	/// store until it's parent, `viewcontext` also saved.
 	public func disposableContext() -> NSManagedObjectContext {
 		let newContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
 		newContext.parent = viewContext

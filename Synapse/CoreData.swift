@@ -5,6 +5,7 @@ class CoreData {
 	//MARK: Shared Instance
 	static var shared = CoreData()
 	
+	//MARK: Managed Contexts
 	/// The default context for managed objects in the UI.
 	var viewContext: NSManagedObjectContext {
 		persistentContainer.viewContext
@@ -18,8 +19,7 @@ class CoreData {
 	}
 	
 	
-	//MARK: Methods
-	
+	//MARK: Basic Methods
 	/// Deletes all entities for specified type.
 	func deleteAllForEntity<T: NSManagedObject>(type: T.Type) {
 		let context = Self.shared.viewContext
@@ -38,7 +38,7 @@ class CoreData {
 		}
 	}
 	
-	//MARK: Core Support
+	//MARK: Persistent Storage
 	lazy var persistentContainer: NSPersistentContainer = {
 	    let container = NSPersistentContainer(name: "Synapse")
 		

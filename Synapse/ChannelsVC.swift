@@ -21,8 +21,6 @@ class ChannelsVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	
 	override func viewDidAppear(_ animated: Bool) {
 			super.viewDidAppear(animated)
-//			FeedReader.subscribe(to: "https://theamericansun.com/rss")
-//			FeedReader.subscribe(to: "https://slatestarcodex.com/feed")
 	}
 	
 	//MARK: UITableView Diffable Data Source

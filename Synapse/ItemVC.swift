@@ -21,6 +21,8 @@ class ItemVC: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		textView.text = item.content
+		
+		// Attach view to view model
 		item.publisher(for: \.isBookmarked)
 			.map(mapBookmarkToImage)
 			.sink { self.bookmarkButton.image = $0 }

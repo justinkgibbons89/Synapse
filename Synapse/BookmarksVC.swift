@@ -6,10 +6,15 @@ class BookmarksVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	//MARK: UIViewController
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		//Set up data source
 		tableView.dataSource = diffableDataSource
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-		fetchedResultsController.delegate = self
-		updateSnapshot(animated: false)
+		tableView.delegate = self
+		
+		//Configure fetch and diffable snapshot
+		fetchedResultsController.delegate = self //enables live updates
+		updateSnapshot(animated: false) //don't animate on first update (it looks weird)
 	}
 	
 	//MARK: UITableView Data Source
@@ -32,7 +37,12 @@ class BookmarksVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		let fetch = Item.fetchRequest() as NSFetchRequest<Item>
 		fetch.predicate = NSPredicate(format: "isBookmarked = %@", NSNumber(booleanLiteral: true))
 		fetch.sortDescriptors = [NSSortDescriptor(keyPath: \Item.pubDate, ascending: true)]
-		let frc = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: CoreData.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+		let frc = NSFetchedResultsController(
+			fetchRequest: fetch,
+			managedObjectContext: CoreData.shared.viewContext,
+			sectionNameKeyPath: nil,
+			cacheName: nil
+		)
 		try! frc.performFetch()
 		return frc
 	}()

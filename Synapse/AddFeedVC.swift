@@ -22,6 +22,7 @@ class AddFeedVC: UITableViewController, UISearchBarDelegate {
 		navigationController?.popViewController(animated: true)
 	}
 	
+	/// Dismisses keyboard when results are scrolled.
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		searchBar.resignFirstResponder()
 	}

@@ -9,10 +9,18 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 	//MARK: UIViewController
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		//Set up data source
+		tableView.dataSource = diffableDataSource
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+		tableView.delegate = self
+		
+		//Configure fetch and diffable snapshot
 		configureFetchedResultsController()
+		updateSnapshot(animated: false) //don't animate on first update (it looks weird)
+		
+		//Set up refresh control
 		configureRefreshControl()
-		updateSnapshot(animated: false)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -91,7 +99,7 @@ class ItemListVC: UITableViewController, NSFetchedResultsControllerDelegate {
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, successHandler) in
 			successHandler(true)
 			context.delete(selectedItem)
-			try! context.save()
+			try? context.save()
 		}
 		
 		let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])

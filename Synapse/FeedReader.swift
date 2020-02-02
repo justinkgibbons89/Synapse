@@ -2,9 +2,12 @@ import Foundation
 import SWXMLHash
 import CoreData
 
+/// FeedReader provides the interface between XML data and Channel models. It maps XML elements to Channel attributes.
+/// It's primarily used with `saveChannelWithItems(:)`
 class FeedReader {
 	
 	//MARK: Initializer
+	/// `data` should be XML data. `context` defaults to the standard UI context.
 	internal init(data: Data, context: NSManagedObjectContext = CoreData.shared.viewContext) {
 		self.context = context
 		self.xml = SWXMLHash.parse(data)
@@ -29,6 +32,7 @@ class FeedReader {
 		return result.element?.attribute(by: "href")?.text
 	}
 	
+	/// The channel is cached so that the context isn't polluted with duplicate `Channel` objects.
 	private lazy var cachedChannel: Channel = {
 		let channel = Channel(context: context)
 		channel.title = channelElement["title"].element?.text
@@ -43,6 +47,8 @@ class FeedReader {
 
 	//MARK: Methods
 	@discardableResult
+	/// Exposes the private `cachedChannel` and makes it discardable.
+	/// (The result is frequently not needed because the `Channel` is inserted into a Core Data context upon initialization.)
 	public func channel() -> Channel {
 		cachedChannel
 	}
@@ -80,12 +86,14 @@ class FeedReader {
 		return item
 	}
 	
-	func attach(channel: Channel, to items: [Item]) {
+	/// Establishes an inverse relationship in Core Data between a Channel and its items.
+	private func attach(channel: Channel, to items: [Item]) {
 		for item in items {
 			item.channel = channel
 		}
 	}
 	
+	/// Builds a new channel with attached items and saves the associated context.
 	public func saveNewChannelWithItems() {
 		attach(channel: channel(), to: items())
 		do {
@@ -102,6 +110,7 @@ class FeedReader {
 extension FeedReader {
 	
 	//MARK: Subscribing
+	/// Downloads the XML data from the given path and calls `saveNewChannelWithItems(:)`
 	public static func subscribe(to channelPath: String, completion: ((Channel) -> Void)? = nil) {
 		Networking().download(channelPath) { data in
 			let feedReader = FeedReader(data: data)
@@ -112,23 +121,8 @@ extension FeedReader {
 		}
 	}
 	
-	public static func analyze(_ channelPath: String) {
-		Networking().download(channelPath) { (data) in
-			let feedReader = FeedReader(data: data)
-			let items = feedReader.items()
-			for item in items {
-				print(item)
-			}
-		}
-	}
-	
-	public static func xml(for channelPath: String, completion: @escaping (XMLIndexer) -> Void) {
-		Networking().download(channelPath) { (data) in
-			let xmlResult = SWXMLHash.parse(data)
-			completion(xmlResult)
-		}
-	}
-	
+	//MARK: Updating
+	/// Downloads and saves only the new items for the given `Channel`.
 	public static func getNewItems(for channel: Channel, completion: @escaping () -> Void) {
 		guard let path = channel.url else {
 			print("Couldn't unwrap URL for channel \(channel)"); return
@@ -147,6 +141,26 @@ extension FeedReader {
 			
 			CoreData.shared.saveContext()
 			completion()
+		}
+	}
+	
+	//MARK: Debugging
+	/// For debugging. Prints a description of the channel and items from the given path.
+	public static func analyze(_ channelPath: String) {
+		Networking().download(channelPath) { (data) in
+			let feedReader = FeedReader(data: data)
+			let items = feedReader.items()
+			for item in items {
+				print(item)
+			}
+		}
+	}
+	
+	/// For debugging. Downloads the data from the given path and passes the XMLIndexer object to the completion block.
+	public static func xml(for channelPath: String, completion: @escaping (XMLIndexer) -> Void) {
+		Networking().download(channelPath) { (data) in
+			let xmlResult = SWXMLHash.parse(data)
+			completion(xmlResult)
 		}
 	}
 }

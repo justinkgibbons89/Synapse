@@ -5,3 +5,4 @@ An early prototype for an RSS reader.
 - Add HTML parsing for articles
 - SwiftUI integration
 - Live search
+- Bookmark sorting
